@@ -74,7 +74,8 @@ async function apiScore(data) {
     }),
   });
   const json = await res.json();
-  return JSON.parse(json.content[0].text);
+  const raw = json.content.map(b => b.text || "").join("").replace(/```json|```/g, "").trim();
+  return JSON.parse(raw);
 }
 
 async function apiChat(msgs, candidate) {
