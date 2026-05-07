@@ -67,7 +67,7 @@ async function apiScore(data) {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
-      model: "claude-sonnet-4-20250514",
+      model: "claude-sonnet-4-6",
       max_tokens: 1000,
       system: "Tu es l'outil de scoring IA de Kiné Wellness Casablanca. Retourne UNIQUEMENT du JSON valide, aucun texte avant ou après, aucun backtick markdown.",
       messages: [{ role: "user", content: `Évalue ce kiné selon les critères Kiné Wellness. JSON requis:\n{"scores":{"diplome":0,"motorise":0,"capacite":0,"ponctualite":0,"vigilance":0,"connaissances":0,"coachabilite":0,"volonte":0,"humilite":0,"serieux":0,"soft_skills":0,"expert_look":0,"physique":0,"non_fumeur":0,"marie":0,"sportif":0,"enfants":0},"totalScore":0,"recommendation":"RECRUTER","reasoning":"...","greenFlags":["..."],"redFlags":["..."]}\nRègles: diplome=10 si diplômé,0 sinon. motorise=10 si oui,0 sinon (bloquant). marie/sportif/enfants=bonus 0-10. totalScore/100. recommendation=RECRUTER|ENTRETIEN|REJETER (REJETER si non motorisé ou non diplômé).\nCandidat: ${JSON.stringify(data)}` }],
@@ -82,7 +82,7 @@ async function apiChat(msgs, candidate) {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
-      model: "claude-sonnet-4-20250514",
+      model: "claude-sonnet-4-6",
       max_tokens: 450,
       system: `Tu es le responsable recrutement de Kiné Wellness, entreprise de kinésithérapie à domicile premium à Casablanca. Tu conduis un entretien structuré en français, ton chaleureux et professionnel. Une question à la fois.\nCandidat: ${candidate.name}, ${candidate.age} ans, ${candidate.city}, ${candidate.exp || 0} ans exp, diplôme: ${candidate.diplome}.\nThèmes à couvrir: motivation domicile vs cabinet, gestion patient difficile, exemple de fidélisation réussie, réaction feedback négatif, ambitions à 5 ans.\nSi premier message, présente-toi chaleureusement et pose ta première question.`,
       messages: msgs,
